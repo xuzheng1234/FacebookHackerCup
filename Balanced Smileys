@@ -1,0 +1,93 @@
+import java.util.*;
+import java.io.*;
+
+
+
+public class Solution {
+
+  /**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			String filename="example.txt";
+			filename="balanced_smileystxt.txt";
+		   try
+		   {
+		        File file = new File(filename);
+		        BufferedReader in = new BufferedReader(new FileReader(file));
+		        String line=in.readLine();
+		        int index=1;
+		        while ((line = in.readLine()) != null) {
+		        	//System.out.println(line);
+		          System.out.println("Case #"+index+": "+balanced(line));
+		         // System.out.println();
+		          index++;
+		           
+		        }
+		   }catch(IOException e)
+		   {
+		       System.out.println(e.getMessage());
+		   }
+		
+	}
+	static String balanced(String input)
+	{
+		
+		
+		int left=0;
+		
+		int colonLeft=0;
+		int colonRight=0;
+		int length=input.length();
+		
+		
+		for(int i=0;i<length;i++)
+		{
+			if(input.charAt(i)=='(')
+			{
+				left++;
+				if(i>0 && input.charAt(i-1)==':')
+				{
+					colonLeft++;
+				}
+			}
+			else if(input.charAt(i)==')')
+			{
+				left--;
+				if(i>0  && input.charAt(i-1)==':')
+				{
+					colonRight++;
+				}
+			}
+			if(left<0)
+			{
+				if((colonRight+left)>=0)
+				{
+					colonRight=colonRight+left;
+					left=0;
+				}
+				else
+				{
+					return "NO";
+				}
+			}
+			
+			
+		}
+		
+		if(left==0)
+		{
+			return "YES";
+		}
+		else
+		{
+			if(colonLeft-left >=0)
+				return "YES";
+			else
+				return "NO";
+		}
+	
+	}
+
+}
