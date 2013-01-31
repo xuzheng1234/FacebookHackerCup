@@ -1,0 +1,149 @@
+import java.util.*;
+import java.io.*;
+
+
+
+public class Final2 {
+
+  /**
+	 * @param args
+	 */
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	
+			String filename="example.txt";
+			filename="find_the_mintxt.txt";
+			long start=System.currentTimeMillis();
+		   try
+		   {
+			   
+			  BufferedWriter fileout = new BufferedWriter(new FileWriter("output.txt", false));
+
+		        File file = new File(filename);
+		        BufferedReader in = new BufferedReader(new FileReader(file));
+		       
+		        int num=Integer.parseInt(in.readLine());
+		        
+		      
+		        for(int i=0;i<num;i++)
+		        {
+		        	
+		        	String []input=in.readLine().split(" ");
+		        	int n=Integer.parseInt(input[0]);
+		        	int k=Integer.parseInt(input[1]);
+		        	
+		        	input=in.readLine().split(" ");
+		        	int a=Integer.parseInt(input[0]);
+		        	int b=Integer.parseInt(input[1]);
+		        	int c=Integer.parseInt(input[2]);
+		        	int r=Integer.parseInt(input[3]);
+		        	
+		        	
+		        	
+		       long[] M=createM(n,k,a,b,c,r);
+		     
+		        int [] list=new int[k+1];	
+		        
+		        
+		        
+		        	for(int j=0;j<k;j++)
+		        	{
+		        		
+		        		long current=M[j];
+		        	
+		        		if(current<=k)
+		        		{
+		        			list[(int) current]++;
+		        		}
+		        		
+		        	}
+		        	
+		       
+		        	
+		        	int min=-1;
+		        	int deleteIndex=0;
+		        	for(int j=k;j<=2*k;j++)
+		        	{
+		        		
+		        		 min=minOfK(list,k);
+		        	
+		        		 long deleted=M[deleteIndex++];
+	
+		        	
+		        		list[min]=1;
+		        	
+		        		
+		        		if(deleted<=k)
+		        		{
+		        			list[(int) deleted]--;
+		        		}
+		        		
+		        		
+		        		
+		        		M[j]=min;
+		        		
+		        		
+		        	}
+		        	
+		        	
+		        	
+		        
+
+		 // System.out.println("Case #"+(i+1)+": "+M[k+ (n-1 - k ) % (k + 1)   ]);
+		        
+		        	 fileout.write("Case #"+(i+1)+": "+M[k+ (n-1 - k ) % (k + 1)   ]);
+		        	 fileout.newLine();
+		        	
+		        	 
+		        }
+		        
+		       fileout.flush();
+				fileout.close();
+				System.out.println(System.currentTimeMillis()-start);
+		   }catch(IOException e)
+		   {
+		       System.out.println(e.getMessage());
+		   }
+	
+		
+	}
+
+	
+	
+	
+	static long[] createM(int n, int k, int a, int b, int c, int r)
+	{
+
+		long[] M=new long[2*k+1];
+		M[0]=(long)a;
+		
+		for(int i=1;i<k;i++)
+		{
+			M[i]=(b*M[i-1] + c)%r;
+		}
+
+		
+		return M;
+	}
+	static int minOfK(int [] list,int k)
+	{
+		
+		
+		for(int i=0;i<=k;i++)
+		{
+			if(list[i]==0)
+				return i;
+			
+		
+			
+		}
+		
+		
+		
+		return -1;
+	}
+	
+	
+	
+}
