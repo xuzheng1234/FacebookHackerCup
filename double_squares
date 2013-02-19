@@ -1,0 +1,14 @@
+ int n=10;
+            int r=(int)Math.sqrt(n);
+           
+          int end=(int)(r*Math.sin(Math.PI/4));
+    		int count=0;
+    		for(int y=0;y<=end;y++)
+    		{
+    			double x=Math.sqrt(n- Math.pow(y, 2));
+    			if(x%1==0)
+    				count++;
+    			
+    			
+    		}
+    		System.out.println(count);
